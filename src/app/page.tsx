@@ -1,103 +1,313 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+
+import ContinentNavigation from './components/ContinentNavigation';
+import CountrySearch from './components/CountrySearch';
+import AfricaMap from './components/AfricaMap';
+import EuropeMap from './components/EuropeMap';
+import AsiaMap from './components/AsiaMap';
+import NorthAmericaMap from './components/NorthAmericaMap';
+import SouthAmericaMap from './components/SouthAmericaMap';
+import AntarcticaMap from './components/AntarcticaMap';
+import AustraliaMap from './components/AustraliaMap';
+
+const africanCountries = [
+  { id: 'AO', name: 'Angola' },
+  { id: 'BI', name: 'Burundi' },
+  { id: 'BJ', name: 'Benin' },
+  { id: 'BF', name: 'Burkina Faso' },
+  { id: 'BW', name: 'Botswana' },
+  { id: 'CF', name: 'Central African Rep.' },
+  { id: 'CI', name: 'Côte d\'Ivoire' },
+  { id: 'CM', name: 'Cameroon' },
+  { id: 'CD', name: 'Dem. Rep. Congo' },
+  { id: 'CG', name: 'Congo' },
+  { id: 'DJ', name: 'Djibouti' },
+  { id: 'DZ', name: 'Algeria' },
+  { id: 'EG', name: 'Egypt' },
+  { id: 'ER', name: 'Eritrea' },
+  { id: 'ET', name: 'Ethiopia' },
+  { id: 'GA', name: 'Gabon' },
+  { id: 'GH', name: 'Ghana' },
+  { id: 'GN', name: 'Guinea' },
+  { id: 'GM', name: 'Gambia' },
+  { id: 'GW', name: 'Guinea-Bissau' },
+  { id: 'GQ', name: 'Eq. Guinea' },
+  { id: 'KE', name: 'Kenya' },
+  { id: 'LR', name: 'Liberia' },
+  { id: 'LY', name: 'Libya' },
+  { id: 'LS', name: 'Lesotho' },
+  { id: 'MA', name: 'Morocco' },
+  { id: 'MG', name: 'Madagascar' },
+  { id: 'ML', name: 'Mali' },
+  { id: 'MZ', name: 'Mozambique' },
+  { id: 'MR', name: 'Mauritania' },
+  { id: 'MW', name: 'Malawi' },
+  { id: 'NA', name: 'Namibia' },
+  { id: 'NE', name: 'Niger' },
+  { id: 'NG', name: 'Nigeria' },
+  { id: 'RW', name: 'Rwanda' },
+  { id: 'EH', name: 'W. Sahara' },
+  { id: 'SD', name: 'Sudan' },
+  { id: 'SS', name: 'S. Sudan' },
+  { id: 'SN', name: 'Senegal' },
+  { id: 'SL', name: 'Sierra Leone' },
+  { id: 'SZ', name: 'Swaziland' },
+  { id: 'TD', name: 'Chad' },
+  { id: 'TG', name: 'Togo' },
+  { id: 'TN', name: 'Tunisia' },
+  { id: 'TZ', name: 'Tanzania' },
+  { id: 'UG', name: 'Uganda' },
+  { id: 'ZA', name: 'South Africa' },
+  { id: 'ZM', name: 'Zambia' },
+  { id: 'ZW', name: 'Zimbabwe' },
+  { id: 'SO', name: 'Somalia' },
+];
+
+const europeanCountries = [
+  { id: 'AL', name: 'Albania' },
+  { id: 'AT', name: 'Austria' },
+  { id: 'BE', name: 'Belgium' },
+  { id: 'BG', name: 'Bulgaria' },
+  { id: 'BA', name: 'Bosnia and Herzegovina' },
+  { id: 'BY', name: 'Belarus' },
+  { id: 'DE', name: 'Germany' },
+  { id: 'DK', name: 'Denmark' },
+  { id: 'EE', name: 'Estonia' },
+  { id: 'FI', name: 'Finland' },
+  { id: 'FR', name: 'France' },
+  { id: 'GR', name: 'Greece' },
+  { id: 'HR', name: 'Croatia' },
+  { id: 'HU', name: 'Hungary' },
+  { id: 'IE', name: 'Ireland' },
+  { id: 'IS', name: 'Iceland' },
+  { id: 'IT', name: 'Italy' },
+  { id: 'LU', name: 'Luxembourg' },
+  { id: 'LV', name: 'Latvia' },
+  { id: 'LT', name: 'Lithuania' },
+  { id: 'MD', name: 'Moldova' },
+  { id: 'MK', name: 'Macedonia' },
+  { id: 'ME', name: 'Montenegro' },
+  { id: 'NL', name: 'Netherlands' },
+  { id: 'NO', name: 'Norway' },
+  { id: 'PL', name: 'Poland' },
+  { id: 'PT', name: 'Portugal' },
+  { id: 'RO', name: 'Romania' },
+  { id: 'RS', name: 'Serbia' },
+  { id: 'SK', name: 'Slovakia' },
+  { id: 'SW', name: 'Switzerland' },
+  { id: 'SN', name: 'Slovenia' },
+  { id: 'SE', name: 'Sweden' },
+  { id: 'UA', name: 'Ukraine' },
+  { id: 'UK', name: 'United Kingdon'},
+  { id: 'ES', name: 'Spain' },
+  { id: 'CY', name: 'Cyprus' },
+  { id: 'CZ', name: 'Czechia' },
+  { id: 'MT', name: 'Malta' },
+  { id: 'KO', name: 'Kosovo' },
+  { id: 'TU', name: 'Turkey' },
+  { id: 'RU', name: 'Russia' },
+];
+
+const asianCountries = [
+  { id: 'AF', name: 'Afghanistan' },
+  { id: 'AM', name: 'Armenia' },
+  { id: 'AZ', name: 'Azerbaijan' },
+  { id: 'BH', name: 'Bahrain' },
+  { id: 'BD', name: 'Bangladesh' },
+  { id: 'BT', name: 'Bhutan' },
+  { id: 'BN', name: 'Brunei' },
+  { id: 'KH', name: 'Cambodia' },
+  { id: 'CN', name: 'China' },
+  { id: 'CY', name: 'Cyprus' },
+  { id: 'GE', name: 'Georgia' },
+  { id: 'IN', name: 'India' },
+  { id: 'ID', name: 'Indonesia' },
+  { id: 'IR', name: 'Iran' },
+  { id: 'IQ', name: 'Iraq' },
+  { id: 'IL', name: 'Israel' },
+  { id: 'JP', name: 'Japan' },
+  { id: 'JO', name: 'Jordan' },
+  { id: 'KZ', name: 'Kazakhstan' },
+  { id: 'KW', name: 'Kuwait' },
+  { id: 'KG', name: 'Kyrgyzstan' },
+  { id: 'LA', name: 'Laos' },
+  { id: 'LB', name: 'Lebanon' },
+  { id: 'MY', name: 'Malaysia' },
+  { id: 'MV', name: 'Maldives' },
+  { id: 'MN', name: 'Mongolia' },
+  { id: 'MM', name: 'Myanmar (Burma)' },
+  { id: 'NP', name: 'Nepal' },
+  { id: 'KP', name: 'North Korea' },
+  { id: 'OM', name: 'Oman' },
+  { id: 'PK', name: 'Pakistan' },
+  { id: 'PH', name: 'Philippines' },
+  { id: 'QA', name: 'Qatar' },
+  { id: 'SA', name: 'Saudi Arabia' },
+  { id: 'SG', name: 'Singapore' },
+  { id: 'KR', name: 'South Korea' },
+  { id: 'LK', name: 'Sri Lanka' },
+  { id: 'SY', name: 'Syria' },
+  { id: 'TJ', name: 'Tajikistan' },
+  { id: 'TH', name: 'Thailand' },
+  { id: 'TR', name: 'Turkey' },
+  { id: 'TM', name: 'Turkmenistan' },
+  { id: 'AE', name: 'United Arab Emirates' },
+  { id: 'UZ', name: 'Uzbekistan' },
+  { id: 'VN', name: 'Vietnam' },
+  { id: 'YE', name: 'Yemen' },
+];
+
+const northAmericanCountries = [
+  { id: 'AG', name: 'Antigua and Barbuda' },
+  { id: 'BS', name: 'Bahamas' },
+  { id: 'BB', name: 'Barbados' },
+  { id: 'BZ', name: 'Belize' },
+  { id: 'CA', name: 'Canada' },
+  { id: 'CR', name: 'Costa Rica' },
+  { id: 'CU', name: 'Cuba' },
+  { id: 'DM', name: 'Dominica' },
+  { id: 'DO', name: 'Dominican Republic' },
+  { id: 'SV', name: 'El Salvador' },
+  { id: 'GD', name: 'Grenada' },
+  { id: 'GT', name: 'Guatemala' },
+  { id: 'HT', name: 'Haiti' },
+  { id: 'HN', name: 'Honduras' },
+  { id: 'JM', name: 'Jamaica' },
+  { id: 'MX', name: 'Mexico' },
+  { id: 'NI', name: 'Nicaragua' },
+  { id: 'PA', name: 'Panama' },
+  { id: 'KN', name: 'Saint Kitts and Nevis' },
+  { id: 'LC', name: 'Saint Lucia' },
+  { id: 'VC', name: 'Saint Vincent and the Grenadines' },
+  { id: 'TT', name: 'Trinidad and Tobago' },
+  { id: 'US', name: 'United States' },
+];
+
+const southAmericanCountries = [
+  { id: 'AR', name: 'Argentina' },
+  { id: 'BO', name: 'Bolivia' },
+  { id: 'BR', name: 'Brazil' },
+  { id: 'CL', name: 'Chile' },
+  { id: 'CO', name: 'Colombia' },
+  { id: 'EC', name: 'Ecuador' },
+  { id: 'GY', name: 'Guyana' },
+  { id: 'PY', name: 'Paraguay' },
+  { id: 'PE', name: 'Peru' },
+  { id: 'SR', name: 'Suriname' },
+  { id: 'UY', name: 'Uruguay' },
+  { id: 'VE', name: 'Venezuela' },
+];
+
+const australianCountries = [
+  { id: 'AU', name: 'Australia' },
+  { id: 'FJ', name: 'Fiji' },
+  { id: 'KI', name: 'Kiribati' },
+  { id: 'MH', name: 'Marshall Islands' },
+  { id: 'FM', name: 'Micronesia' },
+  { id: 'NR', name: 'Nauru' },
+  { id: 'NZ', name: 'New Zealand' },
+  { id: 'PW', name: 'Palau' },
+  { id: 'PG', name: 'Papua New Guinea' },
+  { id: 'WS', name: 'Samoa' },
+  { id: 'SB', name: 'Solomon Islands' },
+  { id: 'TO', name: 'Tonga' },
+  { id: 'TV', name: 'Tuvalu' },
+  { id: 'VU', name: 'Vanuatu' },
+];
+
+const antarcticaCountries = []; // Antarctica has no countries
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  // State to keep track of the selected continent
+  const [selectedContinent, setSelectedContinent] = useState<string | null>('Africa');
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+  // State to potentially hold the selected country ID from the dropdown
+  const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null);
+
+  const handleCountrySelectFromDropdown = (countryId: string | null) => {
+    console.log("Country selected from dropdown:", countryId);
+    setSelectedCountryId(countryId);
+    // TODO: Implement logic to highlight this country on the currently displayed map
+  };
+
+  // Handler for when a continent is selected from the navigation
+  const handleContinentSelect = (continent: string) => {
+    console.log("Continent selected:", continent);
+    setSelectedContinent(continent); // Update the continent state
+    setSelectedCountryId(null); // Clear any selected country when changing continent
+    // TODO: Potentially update the list of countries passed to the dropdown based on the selected continent
+  };
+
+  // --- Conditional Rendering of the Map and Country Dropdown ---
+  let MapComponent = null;
+  let currentContinentCountries: typeof africanCountries | typeof europeanCountries | [] = []; // Define type
+
+  switch (selectedContinent) {
+    case 'Africa':
+      MapComponent = AfricaMap;
+      currentContinentCountries = africanCountries;
+      break;
+    case 'Europe':
+      MapComponent = EuropeMap;
+      currentContinentCountries = europeanCountries;
+      break;
+    case 'Asia':
+      MapComponent = AsiaMap;
+      currentContinentCountries = asianCountries;
+      break;
+    case 'North America':
+      MapComponent = NorthAmericaMap;
+      currentContinentCountries = northAmericanCountries;
+      break;
+    case 'South America':
+      MapComponent = SouthAmericaMap;
+      currentContinentCountries = southAmericanCountries;
+      break;
+    case 'Antarctica':
+      MapComponent = AntarcticaMap;
+      currentContinentCountries = []; // No countries to show for Antarctica
+      break;
+    case 'Australia':
+      MapComponent = AustraliaMap;
+      currentContinentCountries = australianCountries;
+      break;
+    default:
+      MapComponent = AsiaMap;
+      currentContinentCountries = asianCountries;
+      break;
+  }
+
+  return (
+    <div className="flex flex-col items-center  min-h-screen p-8 pb-20 font-[family-name:var(--font-geist-sans)]">
+
+      {/* Continent navigation */}
+      <div className=''>
+        <ContinentNavigation selectedContinent={selectedContinent}
+          onSelectContinent={handleContinentSelect}
+        />
+      </div>
+
+      {/* Countries drop down */}
+      <div className="mt-20 mb-8">
+        {currentContinentCountries.length > 0 && (
+          <CountrySearch countries={currentContinentCountries}
+            onSelectCountry={handleCountrySelectFromDropdown}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        )}
+      </div>
+
+      {/* Render the selected map component */}
+      <div className='mt-10'>
+        {MapComponent && <MapComponent />}
+      </div>
+
+      {/* Optional: Display selected country */}
+      {selectedCountryId && (
+        <p className="mt-4 text-lg">Selected Country ID: {selectedCountryId}</p>
+      )}
+
     </div>
   );
 }
