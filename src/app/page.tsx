@@ -10,7 +10,7 @@ import AsiaMap from './components/AsiaMap';
 import NorthAmericaMap from './components/NorthAmericaMap';
 import SouthAmericaMap from './components/SouthAmericaMap';
 import AntarcticaMap from './components/AntarcticaMap';
-import AustraliaMap from './components/AustraliaMap';
+import OceaniaMap from './components/OceaniaMap';
 
 const africanCountries = [
   { id: 'AO', name: 'Angola' },
@@ -200,7 +200,7 @@ const southAmericanCountries = [
   { id: 'VE', name: 'Venezuela' },
 ];
 
-const australianCountries = [
+const oceaniaCountries = [
   { id: 'AU', name: 'Australia' },
   { id: 'FJ', name: 'Fiji' },
   { id: 'KI', name: 'Kiribati' },
@@ -221,7 +221,7 @@ const antarcticaCountries = []; // Antarctica has no countries
 
 export default function Home() {
   // State to keep track of the selected continent
-  const [selectedContinent, setSelectedContinent] = useState<string | null>('Africa');
+  const [selectedContinent, setSelectedContinent] = useState<string | null>('Asia');
 
   // State to potentially hold the selected country ID from the dropdown
   const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null);
@@ -269,9 +269,9 @@ export default function Home() {
       MapComponent = AntarcticaMap;
       currentContinentCountries = []; // No countries to show for Antarctica
       break;
-    case 'Australia':
-      MapComponent = AustraliaMap;
-      currentContinentCountries = australianCountries;
+    case 'Oceania':
+      MapComponent = OceaniaMap;
+      currentContinentCountries = oceaniaCountries;
       break;
     default:
       MapComponent = AsiaMap;
