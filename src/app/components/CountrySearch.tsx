@@ -10,12 +10,13 @@ interface Country {
 interface CountrySearchProps {
     countries: Country[];
     onSelectCountry: (countryId: string | null) => void;
+    onFocus?: () => void; // Add this
 }
   
-    const CountrySearch: React.FC<CountrySearchProps> = ({ countries, onSelectCountry }) => {
+    const CountrySearch: React.FC<CountrySearchProps> = ({ countries, onSelectCountry, onFocus }) => {
         const [searchTerm, setSearchTerm] = useState('');
         const [isOpen, setIsOpen] = useState(false);
-  
+
         const filteredCountries = useMemo(() => {
             if (!searchTerm) {
                 return countries;
@@ -53,7 +54,11 @@ interface CountrySearchProps {
             <input type="text" placeholder="Looking for..."
                 className="w-full px-3 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-purple-500 focus:border-purple-500"
                 value={searchTerm}
-                onChange={handleInputChange} onFocus={handleInputFocus} onBlur={handleInputBlur}
+                onChange={handleInputChange}
+                onFocus={(e) => {
+                    handleInputFocus();
+                    if(onFocus) onFocus();
+                }}
             />
 
             {/* Dropdown list of countries */}

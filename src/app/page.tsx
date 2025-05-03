@@ -292,15 +292,17 @@ export default function Home() {
       {/* Countries drop down */}
       <div className="mt-20 mb-8">
         {currentContinentCountries.length > 0 && (
-          <CountrySearch countries={currentContinentCountries}
-            onSelectCountry={handleCountrySelectFromDropdown}
+          <CountrySearch
+          countries={currentContinentCountries}
+          onSelectCountry={handleCountrySelectFromDropdown}
+          onFocus={() => setSelectedCountryId(null)}
           />
         )}
       </div>
 
       {/* Render the selected map component */}
       <div className='mt-10'>
-        {MapComponent && <MapComponent />}
+        {MapComponent && <MapComponent selectedCountryId={selectedCountryId} />}
       </div>
 
       {/* Optional: Display selected country */}
