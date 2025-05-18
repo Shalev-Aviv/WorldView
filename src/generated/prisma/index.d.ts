@@ -1135,19 +1135,19 @@ export namespace Prisma {
   export type UserMinAggregateOutputType = {
     id: number | null
     email: string | null
-    username: string | null
+    password: string | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: number | null
     email: string | null
-    username: string | null
+    password: string | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
     email: number
-    username: number
+    password: number
     _all: number
   }
 
@@ -1163,19 +1163,19 @@ export namespace Prisma {
   export type UserMinAggregateInputType = {
     id?: true
     email?: true
-    username?: true
+    password?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
     email?: true
-    username?: true
+    password?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
     email?: true
-    username?: true
+    password?: true
     _all?: true
   }
 
@@ -1268,7 +1268,7 @@ export namespace Prisma {
   export type UserGroupByOutputType = {
     id: number
     email: string
-    username: string
+    password: string
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1293,7 +1293,7 @@ export namespace Prisma {
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
-    username?: boolean
+    password?: boolean
     countryVisits?: boolean | User$countryVisitsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -1301,22 +1301,22 @@ export namespace Prisma {
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
-    username?: boolean
+    password?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     email?: boolean
-    username?: boolean
+    password?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
     id?: boolean
     email?: boolean
-    username?: boolean
+    password?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "username", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     countryVisits?: boolean | User$countryVisitsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1332,7 +1332,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       email: string
-      username: string
+      password: string
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1759,7 +1759,7 @@ export namespace Prisma {
   interface UserFieldRefs {
     readonly id: FieldRef<"User", 'Int'>
     readonly email: FieldRef<"User", 'String'>
-    readonly username: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
   }
     
 
@@ -2196,64 +2196,34 @@ export namespace Prisma {
 
   export type AggregateCountry = {
     _count: CountryCountAggregateOutputType | null
-    _avg: CountryAvgAggregateOutputType | null
-    _sum: CountrySumAggregateOutputType | null
     _min: CountryMinAggregateOutputType | null
     _max: CountryMaxAggregateOutputType | null
   }
 
-  export type CountryAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type CountrySumAggregateOutputType = {
-    id: number | null
-  }
-
   export type CountryMinAggregateOutputType = {
-    id: number | null
     name: string | null
-    code: string | null
   }
 
   export type CountryMaxAggregateOutputType = {
-    id: number | null
     name: string | null
-    code: string | null
   }
 
   export type CountryCountAggregateOutputType = {
-    id: number
     name: number
-    code: number
     _all: number
   }
 
 
-  export type CountryAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type CountrySumAggregateInputType = {
-    id?: true
-  }
-
   export type CountryMinAggregateInputType = {
-    id?: true
     name?: true
-    code?: true
   }
 
   export type CountryMaxAggregateInputType = {
-    id?: true
     name?: true
-    code?: true
   }
 
   export type CountryCountAggregateInputType = {
-    id?: true
     name?: true
-    code?: true
     _all?: true
   }
 
@@ -2295,18 +2265,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: CountryAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: CountrySumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: CountryMinAggregateInputType
@@ -2337,19 +2295,13 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: CountryCountAggregateInputType | true
-    _avg?: CountryAvgAggregateInputType
-    _sum?: CountrySumAggregateInputType
     _min?: CountryMinAggregateInputType
     _max?: CountryMaxAggregateInputType
   }
 
   export type CountryGroupByOutputType = {
-    id: number
     name: string
-    code: string
     _count: CountryCountAggregateOutputType | null
-    _avg: CountryAvgAggregateOutputType | null
-    _sum: CountrySumAggregateOutputType | null
     _min: CountryMinAggregateOutputType | null
     _max: CountryMaxAggregateOutputType | null
   }
@@ -2369,32 +2321,24 @@ export namespace Prisma {
 
 
   export type CountrySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     name?: boolean
-    code?: boolean
     countryVisits?: boolean | Country$countryVisitsArgs<ExtArgs>
     _count?: boolean | CountryCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["country"]>
 
   export type CountrySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     name?: boolean
-    code?: boolean
   }, ExtArgs["result"]["country"]>
 
   export type CountrySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
     name?: boolean
-    code?: boolean
   }, ExtArgs["result"]["country"]>
 
   export type CountrySelectScalar = {
-    id?: boolean
     name?: boolean
-    code?: boolean
   }
 
-  export type CountryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "code", ExtArgs["result"]["country"]>
+  export type CountryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"name", ExtArgs["result"]["country"]>
   export type CountryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     countryVisits?: boolean | Country$countryVisitsArgs<ExtArgs>
     _count?: boolean | CountryCountOutputTypeDefaultArgs<ExtArgs>
@@ -2408,9 +2352,7 @@ export namespace Prisma {
       countryVisits: Prisma.$UserCountryVisitPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
       name: string
-      code: string
     }, ExtArgs["result"]["country"]>
     composites: {}
   }
@@ -2494,8 +2436,8 @@ export namespace Prisma {
      * // Get first 10 Countries
      * const countries = await prisma.country.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const countryWithIdOnly = await prisma.country.findMany({ select: { id: true } })
+     * // Only select the `name`
+     * const countryWithNameOnly = await prisma.country.findMany({ select: { name: true } })
      * 
      */
     findMany<T extends CountryFindManyArgs>(args?: SelectSubset<T, CountryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CountryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -2539,9 +2481,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Countries and only return the `id`
-     * const countryWithIdOnly = await prisma.country.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many Countries and only return the `name`
+     * const countryWithNameOnly = await prisma.country.createManyAndReturn({
+     *   select: { name: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -2630,9 +2572,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Countries and only return the `id`
-     * const countryWithIdOnly = await prisma.country.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more Countries and only return the `name`
+     * const countryWithNameOnly = await prisma.country.updateManyAndReturn({
+     *   select: { name: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2835,9 +2777,7 @@ export namespace Prisma {
    * Fields of the Country model
    */
   interface CountryFieldRefs {
-    readonly id: FieldRef<"Country", 'Int'>
     readonly name: FieldRef<"Country", 'String'>
-    readonly code: FieldRef<"Country", 'String'>
   }
     
 
@@ -3283,35 +3223,33 @@ export namespace Prisma {
   export type UserCountryVisitAvgAggregateOutputType = {
     id: number | null
     userId: number | null
-    countryId: number | null
     visitCount: number | null
   }
 
   export type UserCountryVisitSumAggregateOutputType = {
     id: number | null
     userId: number | null
-    countryId: number | null
     visitCount: number | null
   }
 
   export type UserCountryVisitMinAggregateOutputType = {
     id: number | null
     userId: number | null
-    countryId: number | null
+    countryName: string | null
     visitCount: number | null
   }
 
   export type UserCountryVisitMaxAggregateOutputType = {
     id: number | null
     userId: number | null
-    countryId: number | null
+    countryName: string | null
     visitCount: number | null
   }
 
   export type UserCountryVisitCountAggregateOutputType = {
     id: number
     userId: number
-    countryId: number
+    countryName: number
     visitCount: number
     _all: number
   }
@@ -3320,35 +3258,33 @@ export namespace Prisma {
   export type UserCountryVisitAvgAggregateInputType = {
     id?: true
     userId?: true
-    countryId?: true
     visitCount?: true
   }
 
   export type UserCountryVisitSumAggregateInputType = {
     id?: true
     userId?: true
-    countryId?: true
     visitCount?: true
   }
 
   export type UserCountryVisitMinAggregateInputType = {
     id?: true
     userId?: true
-    countryId?: true
+    countryName?: true
     visitCount?: true
   }
 
   export type UserCountryVisitMaxAggregateInputType = {
     id?: true
     userId?: true
-    countryId?: true
+    countryName?: true
     visitCount?: true
   }
 
   export type UserCountryVisitCountAggregateInputType = {
     id?: true
     userId?: true
-    countryId?: true
+    countryName?: true
     visitCount?: true
     _all?: true
   }
@@ -3442,7 +3378,7 @@ export namespace Prisma {
   export type UserCountryVisitGroupByOutputType = {
     id: number
     userId: number
-    countryId: number
+    countryName: string
     visitCount: number
     _count: UserCountryVisitCountAggregateOutputType | null
     _avg: UserCountryVisitAvgAggregateOutputType | null
@@ -3468,7 +3404,7 @@ export namespace Prisma {
   export type UserCountryVisitSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    countryId?: boolean
+    countryName?: boolean
     visitCount?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     country?: boolean | CountryDefaultArgs<ExtArgs>
@@ -3477,7 +3413,7 @@ export namespace Prisma {
   export type UserCountryVisitSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    countryId?: boolean
+    countryName?: boolean
     visitCount?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     country?: boolean | CountryDefaultArgs<ExtArgs>
@@ -3486,7 +3422,7 @@ export namespace Prisma {
   export type UserCountryVisitSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    countryId?: boolean
+    countryName?: boolean
     visitCount?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     country?: boolean | CountryDefaultArgs<ExtArgs>
@@ -3495,11 +3431,11 @@ export namespace Prisma {
   export type UserCountryVisitSelectScalar = {
     id?: boolean
     userId?: boolean
-    countryId?: boolean
+    countryName?: boolean
     visitCount?: boolean
   }
 
-  export type UserCountryVisitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "countryId" | "visitCount", ExtArgs["result"]["userCountryVisit"]>
+  export type UserCountryVisitOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "countryName" | "visitCount", ExtArgs["result"]["userCountryVisit"]>
   export type UserCountryVisitInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     country?: boolean | CountryDefaultArgs<ExtArgs>
@@ -3522,7 +3458,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       userId: number
-      countryId: number
+      countryName: string
       visitCount: number
     }, ExtArgs["result"]["userCountryVisit"]>
     composites: {}
@@ -3951,7 +3887,7 @@ export namespace Prisma {
   interface UserCountryVisitFieldRefs {
     readonly id: FieldRef<"UserCountryVisit", 'Int'>
     readonly userId: FieldRef<"UserCountryVisit", 'Int'>
-    readonly countryId: FieldRef<"UserCountryVisit", 'Int'>
+    readonly countryName: FieldRef<"UserCountryVisit", 'String'>
     readonly visitCount: FieldRef<"UserCountryVisit", 'Int'>
   }
     
@@ -4384,16 +4320,14 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     email: 'email',
-    username: 'username'
+    password: 'password'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
   export const CountryScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    code: 'code'
+    name: 'name'
   };
 
   export type CountryScalarFieldEnum = (typeof CountryScalarFieldEnum)[keyof typeof CountryScalarFieldEnum]
@@ -4402,7 +4336,7 @@ export namespace Prisma {
   export const UserCountryVisitScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
-    countryId: 'countryId',
+    countryName: 'countryName',
     visitCount: 'visitCount'
   };
 
@@ -4481,31 +4415,31 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: IntFilter<"User"> | number
     email?: StringFilter<"User"> | string
-    username?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
     countryVisits?: UserCountryVisitListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
     id?: SortOrder
     email?: SortOrder
-    username?: SortOrder
+    password?: SortOrder
     countryVisits?: UserCountryVisitOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     email?: string
-    username?: string
+    password?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     countryVisits?: UserCountryVisitListRelationFilter
-  }, "id" | "email" | "username">
+  }, "id" | "email" | "password">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
-    username?: SortOrder
+    password?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -4519,54 +4453,42 @@ export namespace Prisma {
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"User"> | number
     email?: StringWithAggregatesFilter<"User"> | string
-    username?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
   }
 
   export type CountryWhereInput = {
     AND?: CountryWhereInput | CountryWhereInput[]
     OR?: CountryWhereInput[]
     NOT?: CountryWhereInput | CountryWhereInput[]
-    id?: IntFilter<"Country"> | number
     name?: StringFilter<"Country"> | string
-    code?: StringFilter<"Country"> | string
     countryVisits?: UserCountryVisitListRelationFilter
   }
 
   export type CountryOrderByWithRelationInput = {
-    id?: SortOrder
     name?: SortOrder
-    code?: SortOrder
     countryVisits?: UserCountryVisitOrderByRelationAggregateInput
   }
 
   export type CountryWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
     name?: string
-    code?: string
     AND?: CountryWhereInput | CountryWhereInput[]
     OR?: CountryWhereInput[]
     NOT?: CountryWhereInput | CountryWhereInput[]
     countryVisits?: UserCountryVisitListRelationFilter
-  }, "id" | "name" | "code">
+  }, "name" | "name">
 
   export type CountryOrderByWithAggregationInput = {
-    id?: SortOrder
     name?: SortOrder
-    code?: SortOrder
     _count?: CountryCountOrderByAggregateInput
-    _avg?: CountryAvgOrderByAggregateInput
     _max?: CountryMaxOrderByAggregateInput
     _min?: CountryMinOrderByAggregateInput
-    _sum?: CountrySumOrderByAggregateInput
   }
 
   export type CountryScalarWhereWithAggregatesInput = {
     AND?: CountryScalarWhereWithAggregatesInput | CountryScalarWhereWithAggregatesInput[]
     OR?: CountryScalarWhereWithAggregatesInput[]
     NOT?: CountryScalarWhereWithAggregatesInput | CountryScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Country"> | number
     name?: StringWithAggregatesFilter<"Country"> | string
-    code?: StringWithAggregatesFilter<"Country"> | string
   }
 
   export type UserCountryVisitWhereInput = {
@@ -4575,7 +4497,7 @@ export namespace Prisma {
     NOT?: UserCountryVisitWhereInput | UserCountryVisitWhereInput[]
     id?: IntFilter<"UserCountryVisit"> | number
     userId?: IntFilter<"UserCountryVisit"> | number
-    countryId?: IntFilter<"UserCountryVisit"> | number
+    countryName?: StringFilter<"UserCountryVisit"> | string
     visitCount?: IntFilter<"UserCountryVisit"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     country?: XOR<CountryScalarRelationFilter, CountryWhereInput>
@@ -4584,7 +4506,7 @@ export namespace Prisma {
   export type UserCountryVisitOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
-    countryId?: SortOrder
+    countryName?: SortOrder
     visitCount?: SortOrder
     user?: UserOrderByWithRelationInput
     country?: CountryOrderByWithRelationInput
@@ -4592,21 +4514,21 @@ export namespace Prisma {
 
   export type UserCountryVisitWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    userId_countryId?: UserCountryVisitUserIdCountryIdCompoundUniqueInput
+    userId_countryName?: UserCountryVisitUserIdCountryNameCompoundUniqueInput
     AND?: UserCountryVisitWhereInput | UserCountryVisitWhereInput[]
     OR?: UserCountryVisitWhereInput[]
     NOT?: UserCountryVisitWhereInput | UserCountryVisitWhereInput[]
     userId?: IntFilter<"UserCountryVisit"> | number
-    countryId?: IntFilter<"UserCountryVisit"> | number
+    countryName?: StringFilter<"UserCountryVisit"> | string
     visitCount?: IntFilter<"UserCountryVisit"> | number
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     country?: XOR<CountryScalarRelationFilter, CountryWhereInput>
-  }, "id" | "userId_countryId">
+  }, "id" | "userId_countryName">
 
   export type UserCountryVisitOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
-    countryId?: SortOrder
+    countryName?: SortOrder
     visitCount?: SortOrder
     _count?: UserCountryVisitCountOrderByAggregateInput
     _avg?: UserCountryVisitAvgOrderByAggregateInput
@@ -4621,94 +4543,83 @@ export namespace Prisma {
     NOT?: UserCountryVisitScalarWhereWithAggregatesInput | UserCountryVisitScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"UserCountryVisit"> | number
     userId?: IntWithAggregatesFilter<"UserCountryVisit"> | number
-    countryId?: IntWithAggregatesFilter<"UserCountryVisit"> | number
+    countryName?: StringWithAggregatesFilter<"UserCountryVisit"> | string
     visitCount?: IntWithAggregatesFilter<"UserCountryVisit"> | number
   }
 
   export type UserCreateInput = {
     email: string
-    username: string
+    password: string
     countryVisits?: UserCountryVisitCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
     id?: number
     email: string
-    username: string
+    password: string
     countryVisits?: UserCountryVisitUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     countryVisits?: UserCountryVisitUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
     countryVisits?: UserCountryVisitUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
     id?: number
     email: string
-    username: string
+    password: string
   }
 
   export type UserUpdateManyMutationInput = {
     email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
   }
 
   export type CountryCreateInput = {
     name: string
-    code: string
     countryVisits?: UserCountryVisitCreateNestedManyWithoutCountryInput
   }
 
   export type CountryUncheckedCreateInput = {
-    id?: number
     name: string
-    code: string
     countryVisits?: UserCountryVisitUncheckedCreateNestedManyWithoutCountryInput
   }
 
   export type CountryUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    code?: StringFieldUpdateOperationsInput | string
     countryVisits?: UserCountryVisitUpdateManyWithoutCountryNestedInput
   }
 
   export type CountryUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    code?: StringFieldUpdateOperationsInput | string
     countryVisits?: UserCountryVisitUncheckedUpdateManyWithoutCountryNestedInput
   }
 
   export type CountryCreateManyInput = {
-    id?: number
     name: string
-    code: string
   }
 
   export type CountryUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
-    code?: StringFieldUpdateOperationsInput | string
   }
 
   export type CountryUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    code?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserCountryVisitCreateInput = {
@@ -4720,7 +4631,7 @@ export namespace Prisma {
   export type UserCountryVisitUncheckedCreateInput = {
     id?: number
     userId: number
-    countryId: number
+    countryName: string
     visitCount?: number
   }
 
@@ -4733,14 +4644,14 @@ export namespace Prisma {
   export type UserCountryVisitUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
-    countryId?: IntFieldUpdateOperationsInput | number
+    countryName?: StringFieldUpdateOperationsInput | string
     visitCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserCountryVisitCreateManyInput = {
     id?: number
     userId: number
-    countryId: number
+    countryName: string
     visitCount?: number
   }
 
@@ -4751,7 +4662,7 @@ export namespace Prisma {
   export type UserCountryVisitUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
-    countryId?: IntFieldUpdateOperationsInput | number
+    countryName?: StringFieldUpdateOperationsInput | string
     visitCount?: IntFieldUpdateOperationsInput | number
   }
 
@@ -4794,7 +4705,7 @@ export namespace Prisma {
   export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
-    username?: SortOrder
+    password?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -4804,13 +4715,13 @@ export namespace Prisma {
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
-    username?: SortOrder
+    password?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
-    username?: SortOrder
+    password?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -4852,29 +4763,15 @@ export namespace Prisma {
   }
 
   export type CountryCountOrderByAggregateInput = {
-    id?: SortOrder
     name?: SortOrder
-    code?: SortOrder
-  }
-
-  export type CountryAvgOrderByAggregateInput = {
-    id?: SortOrder
   }
 
   export type CountryMaxOrderByAggregateInput = {
-    id?: SortOrder
     name?: SortOrder
-    code?: SortOrder
   }
 
   export type CountryMinOrderByAggregateInput = {
-    id?: SortOrder
     name?: SortOrder
-    code?: SortOrder
-  }
-
-  export type CountrySumOrderByAggregateInput = {
-    id?: SortOrder
   }
 
   export type UserScalarRelationFilter = {
@@ -4887,43 +4784,41 @@ export namespace Prisma {
     isNot?: CountryWhereInput
   }
 
-  export type UserCountryVisitUserIdCountryIdCompoundUniqueInput = {
+  export type UserCountryVisitUserIdCountryNameCompoundUniqueInput = {
     userId: number
-    countryId: number
+    countryName: string
   }
 
   export type UserCountryVisitCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    countryId?: SortOrder
+    countryName?: SortOrder
     visitCount?: SortOrder
   }
 
   export type UserCountryVisitAvgOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    countryId?: SortOrder
     visitCount?: SortOrder
   }
 
   export type UserCountryVisitMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    countryId?: SortOrder
+    countryName?: SortOrder
     visitCount?: SortOrder
   }
 
   export type UserCountryVisitMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    countryId?: SortOrder
+    countryName?: SortOrder
     visitCount?: SortOrder
   }
 
   export type UserCountryVisitSumOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    countryId?: SortOrder
     visitCount?: SortOrder
   }
 
@@ -5127,7 +5022,7 @@ export namespace Prisma {
 
   export type UserCountryVisitUncheckedCreateWithoutUserInput = {
     id?: number
-    countryId: number
+    countryName: string
     visitCount?: number
   }
 
@@ -5163,7 +5058,7 @@ export namespace Prisma {
     NOT?: UserCountryVisitScalarWhereInput | UserCountryVisitScalarWhereInput[]
     id?: IntFilter<"UserCountryVisit"> | number
     userId?: IntFilter<"UserCountryVisit"> | number
-    countryId?: IntFilter<"UserCountryVisit"> | number
+    countryName?: StringFilter<"UserCountryVisit"> | string
     visitCount?: IntFilter<"UserCountryVisit"> | number
   }
 
@@ -5206,13 +5101,13 @@ export namespace Prisma {
 
   export type UserCreateWithoutCountryVisitsInput = {
     email: string
-    username: string
+    password: string
   }
 
   export type UserUncheckedCreateWithoutCountryVisitsInput = {
     id?: number
     email: string
-    username: string
+    password: string
   }
 
   export type UserCreateOrConnectWithoutCountryVisitsInput = {
@@ -5222,13 +5117,10 @@ export namespace Prisma {
 
   export type CountryCreateWithoutCountryVisitsInput = {
     name: string
-    code: string
   }
 
   export type CountryUncheckedCreateWithoutCountryVisitsInput = {
-    id?: number
     name: string
-    code: string
   }
 
   export type CountryCreateOrConnectWithoutCountryVisitsInput = {
@@ -5249,13 +5141,13 @@ export namespace Prisma {
 
   export type UserUpdateWithoutCountryVisitsInput = {
     email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateWithoutCountryVisitsInput = {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
-    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
   }
 
   export type CountryUpsertWithoutCountryVisitsInput = {
@@ -5271,18 +5163,15 @@ export namespace Prisma {
 
   export type CountryUpdateWithoutCountryVisitsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    code?: StringFieldUpdateOperationsInput | string
   }
 
   export type CountryUncheckedUpdateWithoutCountryVisitsInput = {
-    id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    code?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserCountryVisitCreateManyUserInput = {
     id?: number
-    countryId: number
+    countryName: string
     visitCount?: number
   }
 
@@ -5293,13 +5182,13 @@ export namespace Prisma {
 
   export type UserCountryVisitUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
-    countryId?: IntFieldUpdateOperationsInput | number
+    countryName?: StringFieldUpdateOperationsInput | string
     visitCount?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserCountryVisitUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
-    countryId?: IntFieldUpdateOperationsInput | number
+    countryName?: StringFieldUpdateOperationsInput | string
     visitCount?: IntFieldUpdateOperationsInput | number
   }
 

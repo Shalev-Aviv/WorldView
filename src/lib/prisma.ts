@@ -1,20 +1,21 @@
-// lib/prisma.js (a dedicated file for your prisma client instance)
-import { PrismaClient } from '@prisma/client';
+// src/lib/prisma.ts
+import { PrismaClient } from '../generated/prisma'; // <-- Use the generated client
 
-// add prisma to the NodeJS global type
+// Add PrismaClient to the global type
 declare global {
-    var prisma: PrismaClient;
+  var prisma: PrismaClient | undefined; // Use var instead of let/const for global
 }
 
 let prisma: PrismaClient;
 
 if (process.env.NODE_ENV === 'production') {
-    prisma = new PrismaClient();
+  prisma = new PrismaClient();
 } else {
-    if (!global.prisma) {
-        global.prisma = new PrismaClient();
-    }
-    prisma = global.prisma;
+  // Prevent multiple instances in development HMR
+  if (!global.prisma) {
+    global.prisma = new PrismaClient();
+  }
+  prisma = global.prisma;
 }
 
 export default prisma;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import ContinentNavigation from './components/ContinentNavigation';
 import CountrySearch from './components/CountrySearch';
@@ -11,6 +11,7 @@ import NorthAmericaMap from './components/NorthAmericaMap';
 import SouthAmericaMap from './components/SouthAmericaMap';
 import AntarcticaMap from './components/AntarcticaMap';
 import OceaniaMap from './components/OceaniaMap';
+import AuthModal from './components/LogicModal';
 
 const africanCountries = [
   { id: 'AO', name: 'Angola' },
@@ -144,6 +145,7 @@ const asianCountries = [
   { id: 'PK', name: 'Pakistan' },
   { id: 'PH', name: 'Philippines' },
   { id: 'QA', name: 'Qatar' },
+  { id: 'RU', name: 'Russia' },
   { id: 'SA', name: 'Saudi Arabia' },
   { id: 'SG', name: 'Singapore' },
   { id: 'KR', name: 'South Korea' },
@@ -224,11 +226,90 @@ export default function Home() {
   const [selectedContinent, setSelectedContinent] = useState<string | null>('Asia');
 
   // State to potentially hold the selected country ID from the dropdown
-  const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null);
+  const [selectedCountryName, setSelectedCountryName] = useState<string | null>(null);
+
+  const [showModal, setShowModal] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
+  const [visitedCountries, setVisitedCountries] = useState<string[]>([]);
+  const [user, setUser] = useState<{ id: number, email: string, username?: string } | null>(null);
+
+  useEffect(() => {
+    const t = localStorage.getItem('token');
+    const u = localStorage.getItem('user');
+    if (u) setUser(JSON.parse(u));
+    if (!t) setShowModal(true);
+    else {
+      setToken(t);
+      fetchVisited(t);
+    }
+  }, []);
+
+  async function fetchVisited(token: string) {
+    const res = await fetch('/api/visit-country', {
+      method: 'GET',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setVisitedCountries(data.visitedCountries || []);
+    } else if (res.status === 401) {
+      // Token invalid or expired: clear and show modal
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      setToken(null);
+      setUser(null);
+      setShowModal(true);
+      setVisitedCountries([]);
+    }
+  }
+
+  async function handleAuth(mode: 'login' | 'signup', email: string, password: string) {
+    const res = await fetch(`/api/auth/${mode}`, {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (res.ok) {
+      const { token, user } = await res.json();
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      setToken(token);
+      setUser(user);
+      setShowModal(false);
+      fetchVisited(token);
+    } else {
+      alert('Authentication failed');
+    }
+  }
+
+  async function handleCountryClick(countryId: string) {
+    if (!token) return setShowModal(true);
+    setSelectedCountryName(countryId);
+    const res = await fetch('/api/visit-country', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ countryId })
+    });
+    if (res.ok) {
+      setVisitedCountries((prev) =>
+        prev.includes(countryId) ? prev : [...prev, countryId]
+      );
+    } else if (res.status === 401) {
+      // Token invalid or expired: clear and show modal
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      setToken(null);
+      setUser(null);
+      setShowModal(true);
+    }
+  }
 
   const handleCountrySelectFromDropdown = (countryId: string | null) => {
     console.log("Country selected from dropdown:", countryId);
-    setSelectedCountryId(countryId);
+    setSelectedCountryName(countryId);
     // TODO: Implement logic to highlight this country on the currently displayed map
   };
 
@@ -236,7 +317,7 @@ export default function Home() {
   const handleContinentSelect = (continent: string) => {
     console.log("Continent selected:", continent);
     setSelectedContinent(continent); // Update the continent state
-    setSelectedCountryId(null); // Clear any selected country when changing continent
+    setSelectedCountryName(null); // Clear any selected country when changing continent
     // TODO: Potentially update the list of countries passed to the dropdown based on the selected continent
   };
 
@@ -281,7 +362,14 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center  min-h-screen p-8 pb-20 font-[family-name:var(--font-geist-sans)]">
-
+      {/* User info top left */}
+      <div className='absolute top-10 left-10 z-100'>
+        {user && (
+          <span className="bg-gray-800 text-white px-3 py-1 rounded">
+            {user.username || user.email}
+          </span>
+        )}
+      </div>
       {/* Continent navigation */}
       <div className=''>
         <ContinentNavigation selectedContinent={selectedContinent}
@@ -295,20 +383,22 @@ export default function Home() {
           <CountrySearch
           countries={currentContinentCountries}
           onSelectCountry={handleCountrySelectFromDropdown}
-          onFocus={() => setSelectedCountryId(null)}
+          onFocus={() => setSelectedCountryName(null)}
           />
         )}
       </div>
 
       {/* Render the selected map component */}
       <div className='mt-10'>
-        {MapComponent && <MapComponent selectedCountryId={selectedCountryId} />}
+        {MapComponent && <MapComponent selectedCountryName={selectedCountryName} visitedCountries={visitedCountries} onCountryClick={handleCountryClick} />}
       </div>
 
       {/* Optional: Display selected country */}
-      {selectedCountryId && (
-        <p className="mt-4 text-lg">Selected Country ID: {selectedCountryId}</p>
+      {selectedCountryName && (
+        <p className="mt-4 text-lg">Selected Country ID: {selectedCountryName}</p>
       )}
+
+      <AuthModal show={showModal} onAuth={handleAuth} onClose={()=>setShowModal(false)} />
 
     </div>
   );

@@ -1,12 +1,9 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  output   = "../src/generated/prisma" // Assuming this is still your desired output
 }
 
 datasource db {
@@ -17,26 +14,34 @@ datasource db {
 model User {
   id            Int                @id @default(autoincrement())
   email         String             @unique
-  username      String             @unique
+  password      String             @unique
   // ... other user fields
   countryVisits UserCountryVisit[] // Define a relation to the linking table
+
+  @@map("users") // Optional: map model name to table name
 }
 
 model Country {
-  id            Int                @id @default(autoincrement())
-  name          String             @unique
-  code          String             @unique // Example country code field
+  name String @id @unique // Use name as primary key and unique
+
   countryVisits UserCountryVisit[] // Define a relation to the linking table
+
+  @@map("countries") // Optional: map model name to table name
 }
 
 model UserCountryVisit {
-  id         Int @id @default(autoincrement())
-  userId     Int
-  countryId  Int
+  id          Int    @id @default(autoincrement())
+  userId      Int
+  // Change this field to String and rename it for clarity
+  countryName String // Changed to reference Country.name
+
   visitCount Int @default(1) // Default to 1 visit when a record is created
 
   user    User    @relation(fields: [userId], references: [id])
-  country Country @relation(fields: [countryId], references: [id])
+  // Reference the 'name' field in the Country model
+  country Country @relation(fields: [countryName], references: [name])
 
-  @@unique([userId, countryId]) // Ensures a user can only have one entry per country
+  // Update the unique constraint to use the countryName string
+  @@unique([userId, countryName])
+  @@map("user_country_visits") // Optional: map model name to table name
 }
