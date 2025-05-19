@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-
+import React, { useState, useEffect } from 'react';
+import AuthStatus from './components/AuthStatus';
 import ContinentNavigation from './components/ContinentNavigation';
 import CountrySearch from './components/CountrySearch';
 import AfricaMap from './components/AfricaMap';
@@ -221,7 +221,7 @@ const oceaniaCountries = [
 
 const antarcticaCountries = []; // Antarctica has no countries
 
-export default function Home() {
+export default function HomePage() {
   // State to keep track of the selected continent
   const [selectedContinent, setSelectedContinent] = useState<string | null>('Asia');
 
@@ -231,16 +231,21 @@ export default function Home() {
   const [showModal, setShowModal] = useState(false);
   const [token, setToken] = useState<string | null>(null);
   const [visitedCountries, setVisitedCountries] = useState<string[]>([]);
-  const [user, setUser] = useState<{ id: number, email: string, username?: string } | null>(null);
+  const [user, setUser] = useState<{ email: string } | null>(null);
 
   useEffect(() => {
-    const t = localStorage.getItem('token');
-    const u = localStorage.getItem('user');
-    if (u) setUser(JSON.parse(u));
-    if (!t) setShowModal(true);
-    else {
-      setToken(t);
-      fetchVisited(t);
+    // Example: get user from localStorage or cookie
+    const token = localStorage.getItem('token');
+    const email = localStorage.getItem('email');
+    if (token && email) {
+      setToken(token);
+      setUser({ email });
+      setShowModal(false);
+      fetchVisited(token);
+    } else {
+      setToken(null);
+      setUser(null);
+      setShowModal(true);
     }
   }, []);
 
@@ -255,7 +260,7 @@ export default function Home() {
     } else if (res.status === 401) {
       // Token invalid or expired: clear and show modal
       localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.removeItem('email');
       setToken(null);
       setUser(null);
       setShowModal(true);
@@ -272,9 +277,9 @@ export default function Home() {
     if (res.ok) {
       const { token, user } = await res.json();
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('email', user.email);
       setToken(token);
-      setUser(user);
+      setUser({ email: user.email });
       setShowModal(false);
       fetchVisited(token);
     } else {
@@ -282,43 +287,50 @@ export default function Home() {
     }
   }
 
-  async function handleCountryClick(countryId: string) {
+  async function handleCountryClick(countryName: string) {
     if (!token) return setShowModal(true);
-    setSelectedCountryName(countryId);
+    setSelectedCountryName(countryName);
     const res = await fetch('/api/visit-country', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ countryId })
+      body: JSON.stringify({ countryName })
     });
     if (res.ok) {
       setVisitedCountries((prev) =>
-        prev.includes(countryId) ? prev : [...prev, countryId]
+        prev.includes(countryName) ? prev : [...prev, countryName]
       );
     } else if (res.status === 401) {
       // Token invalid or expired: clear and show modal
       localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      localStorage.removeItem('email');
       setToken(null);
       setUser(null);
       setShowModal(true);
     }
   }
 
-  const handleCountrySelectFromDropdown = (countryId: string | null) => {
-    console.log("Country selected from dropdown:", countryId);
-    setSelectedCountryName(countryId);
+  const handleCountrySelectFromDropdown = (countryName: string | null) => {
+    setSelectedCountryName(countryName);
     // TODO: Implement logic to highlight this country on the currently displayed map
   };
 
   // Handler for when a continent is selected from the navigation
   const handleContinentSelect = (continent: string) => {
-    console.log("Continent selected:", continent);
     setSelectedContinent(continent); // Update the continent state
     setSelectedCountryName(null); // Clear any selected country when changing continent
     // TODO: Potentially update the list of countries passed to the dropdown based on the selected continent
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    setToken(null);
+    setUser(null);
+    setShowModal(true);
+    setVisitedCountries([]);
   };
 
   // --- Conditional Rendering of the Map and Country Dropdown ---
@@ -361,17 +373,14 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center  min-h-screen p-8 pb-20 font-[family-name:var(--font-geist-sans)]">
-      {/* User info top left */}
-      <div className='absolute top-10 left-10 z-100'>
-        {user && (
-          <span className="bg-gray-800 text-white px-3 py-1 rounded">
-            {user.username || user.email}
-          </span>
-        )}
-      </div>
+    <div className="flex flex-col items-center min-h-screen p-8 pb-20 font-[family-name:var(--font-geist-sans)]">
+      {/* Auth status and logout */}
+      {user && (
+        <AuthStatus email={user.email} onLogout={handleLogout} />
+      )}
+
       {/* Continent navigation */}
-      <div className=''>
+      <div>
         <ContinentNavigation selectedContinent={selectedContinent}
           onSelectContinent={handleContinentSelect}
         />
@@ -381,9 +390,9 @@ export default function Home() {
       <div className="mt-20 mb-8">
         {currentContinentCountries.length > 0 && (
           <CountrySearch
-          countries={currentContinentCountries}
-          onSelectCountry={handleCountrySelectFromDropdown}
-          onFocus={() => setSelectedCountryName(null)}
+            countries={currentContinentCountries}
+            onSelectCountry={handleCountrySelectFromDropdown}
+            onFocus={() => setSelectedCountryName(null)}
           />
         )}
       </div>
@@ -395,11 +404,13 @@ export default function Home() {
 
       {/* Optional: Display selected country */}
       {selectedCountryName && (
-        <p className="mt-4 text-lg">Selected Country ID: {selectedCountryName}</p>
+        <p className="mt-4 text-lg">Selected Country: {selectedCountryName}</p>
       )}
 
-      <AuthModal show={showModal} onAuth={handleAuth} onClose={()=>setShowModal(false)} />
-
+      {/* Auth modal for login/signup */}
+      {!user && (
+        <AuthModal show={showModal} onAuth={handleAuth} onClose={() => setShowModal(false)} />
+      )}
     </div>
   );
 }
