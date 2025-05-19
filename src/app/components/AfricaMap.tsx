@@ -216,25 +216,26 @@ const AfricaMap: React.FC<AfricaMapProps> = ({ selectedCountryName, visitedCount
         <svg xmlns="http://www.w3.org/2000/svg"
             version="1.2" id="svg2"
             style={{ strokeLinejoin: 'round' }}
-            className='stroke-black fill-[#f2f2f2]'
+            className='stroke-black fill-[#f2f2f2] w-[1000px] h-[1001px]'
             enableBackground="new 0 0 1000 1001"
             viewBox="0 0 1000 1001"
-            width="1000px" height="1001px"
             >
-                
-            {africaPaths.map((country) => (
-                <path className='cursor-pointer ${selectedCountryName === country.dataName
-                                                    ? "fill-green-500"
-                                                    : visitedCountries.includes(country.dataName)
-                                                        ? "fill-purple-500"
-                                                        : ""
-                                                } transition transform duration-200 ease-in-out fill-opacity-200'
-                    key={country.dataName}
-                    data-name={country.dataName}
-                    d={country.d}
-                    onClick={() => onCountryClick(country.dataName)}
-                />
-            ))}
+            
+            {africaPaths.map((country) => {
+                let fillClass = '';
+                if (visitedCountries.includes(country.dataName)) {
+                    fillClass = 'fill-purple-500';
+                }
+                return (
+                    <path
+                        className={`cursor-pointer transition transform duration-200 ease-in-out fill-opacity-200 ${fillClass}`}
+                        key={country.dataName}
+                        data-name={country.dataName}
+                        d={country.d}
+                        onClick={() => onCountryClick(country.dataName)}
+                    />
+                );
+            })}
         </svg>
     </div>
 );

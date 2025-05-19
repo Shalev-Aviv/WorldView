@@ -1,21 +1,28 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
 interface Country {
-    id: string;
     name: string;
 }
   
 interface CountrySearchProps {
     countries: Country[];
     onSelectCountry: (countryId: string | null) => void;
-    onFocus?: () => void; // Add this
+    onFocus?: () => void;
+    selectedCountryName?: string | null; // <-- Add this prop
 }
   
-    const CountrySearch: React.FC<CountrySearchProps> = ({ countries, onSelectCountry, onFocus }) => {
+    const CountrySearch: React.FC<CountrySearchProps> = ({ countries, onSelectCountry, onFocus, selectedCountryName }) => {
         const [searchTerm, setSearchTerm] = useState('');
         const [isOpen, setIsOpen] = useState(false);
+
+        // Sync input value with selectedCountryName from parent
+        useEffect(() => {
+            if (selectedCountryName) {
+                setSearchTerm(selectedCountryName);
+            }
+        }, [selectedCountryName]);
 
         const filteredCountries = useMemo(() => {
             if (!searchTerm) {
@@ -44,7 +51,7 @@ interface CountrySearchProps {
         const handleSelectCountry = (country: Country) => {
           setSearchTerm(country.name);
           setIsOpen(false);
-          onSelectCountry(country.id);
+          onSelectCountry(country.name);
         };
     
         return (
@@ -59,13 +66,14 @@ interface CountrySearchProps {
                     handleInputFocus();
                     if(onFocus) onFocus();
                 }}
+                onBlur={handleInputBlur}
             />
 
             {/* Dropdown list of countries */}
             {isOpen && filteredCountries.length > 0 && (
                 <ul className="absolute z-10 w-full bg-black border border-gray-400 rounded-md mt-1 max-h-60 overflow-y-auto shadow-lg">
                     {filteredCountries.map(country => (
-                        <li key={country.id} onClick={() => handleSelectCountry(country)}
+                        <li key={country.name} onClick={() => handleSelectCountry(country)}
                             className="px-3 py-2 cursor-pointer hover:bg-white hover:text-black text-white"
                         >
                         {country.name}

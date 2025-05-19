@@ -44,26 +44,26 @@ const OceaniaMap: React.FC<OceaniaMapProps> = ({ selectedCountryName, visitedCou
             <svg xmlns="http://www.w3.org/2000/svg"
                 version="1.2" id="svg2"
                 style={{ strokeLinejoin: 'round' }}
-                className='stroke-[#000] fill-[#f2f2f2]'
+                className='stroke-[#000] fill-[#f2f2f2] w-[1401px] h-[1001px]'
                 enableBackground="new 0 0 1401 1001"
                 viewBox="0 0 1401 1001"
-                width="1401" height="1001"
                 >
                 
-                {oceaniaPaths.map((country) => (
-                <path className='cursor-pointer ${selectedCountryName === country.dataName
-                                                    ? "fill-green-500"
-                                                    : visitedCountries.includes(country.dataName)
-                                                        ? "fill-purple-500"
-                                                        : ""
-                                                } transition transform duration-200 ease-in-out fill-opacity-200'
+                {oceaniaPaths.map((country) => {
+                let fillClass = '';
+                if (visitedCountries.includes(country.dataName)) {
+                    fillClass = 'fill-purple-500';
+                }
+                return (
+                    <path
+                        className={`cursor-pointer transition transform duration-200 ease-in-out fill-opacity-200 ${fillClass}`}
                         key={country.dataName}
-                        id={country.dataName}
                         data-name={country.dataName}
                         d={country.d}
                         onClick={() => onCountryClick(country.dataName)}
                     />
-                ))}
+                );
+            })}
             </svg>
         </div>
     );

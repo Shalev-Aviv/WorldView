@@ -74,27 +74,28 @@ const southAmericaPaths = [
 const SouthAmericaMap: React.FC<SouthAmericaMapProps> = ({ selectedCountryName, visitedCountries, onCountryClick }) => (
     <div>
         <svg xmlns="http://www.w3.org/2000/svg"
-            className='stroke-[#000] fill-[#f2f2f2]'
-            style={{ strokeLinejoin: 'round' }}
-            viewBox="0 0 614 1001"
             version="1.2" id="svg2"
-            width="614" height="1001"
+            style={{ strokeLinejoin: 'round' }}
+            className='stroke-[#000] fill-[#f2f2f2] w-[614px] h-[1001px]'
+            enableBackground="new 0 0 614 1001"
+            viewBox="0 0 614 1001"
             >
             
-            {southAmericaPaths.map((country) => (
-                <path className='cursor-pointer ${selectedCountryName === country.dataName
-                                                    ? "fill-green-500"
-                                                    : visitedCountries.includes(country.dataName)
-                                                        ? "fill-purple-500"
-                                                        : ""
-                                                } transition transform duration-200 ease-in-out fill-opacity-200'
-                    key={country.dataName}
-                    id={country.dataName}
-                    data-name={country.dataName}
-                    d={country.d}
-                    onClick={() => onCountryClick(country.dataName)}
-                />
-            ))}
+            {southAmericaPaths.map((country) => {
+                let fillClass = '';
+                if (visitedCountries.includes(country.dataName)) {
+                    fillClass = 'fill-purple-500';
+                }
+                return (
+                    <path
+                        className={`cursor-pointer transition transform duration-200 ease-in-out fill-opacity-200 ${fillClass}`}
+                        key={country.dataName}
+                        data-name={country.dataName}
+                        d={country.d}
+                        onClick={() => onCountryClick(country.dataName)}
+                    />
+                );
+            })}
         </svg>
     </div>
 );
