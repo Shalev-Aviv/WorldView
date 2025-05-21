@@ -76,7 +76,7 @@ const SouthAmericaMap: React.FC<SouthAmericaMapProps> = ({ selectedCountryName, 
         <svg xmlns="http://www.w3.org/2000/svg"
             version="1.2" id="svg2"
             style={{ strokeLinejoin: 'round' }}
-            className='stroke-[#000] fill-[#f2f2f2] w-[614px] h-[1001px]'
+            className='stroke-black stroke-[0.2px] fill-[#f2f2f2] w-[614px] h-[1001px]'
             enableBackground="new 0 0 614 1001"
             viewBox="0 0 614 1001"
             >

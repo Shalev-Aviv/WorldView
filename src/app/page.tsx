@@ -9,7 +9,6 @@ import EuropeMap from './components/EuropeMap';
 import AsiaMap from './components/AsiaMap';
 import NorthAmericaMap from './components/NorthAmericaMap';
 import SouthAmericaMap from './components/SouthAmericaMap';
-import AntarcticaMap from './components/AntarcticaMap';
 import OceaniaMap from './components/OceaniaMap';
 import AuthModal from './components/LogicModal';
 
@@ -23,7 +22,6 @@ const asianCountries = [
   { name: 'Brunei' },
   { name: 'Cambodia' },
   { name: 'China' },
-  { name: 'Cyprus' },
   { name: 'Georgia' },
   { name: 'India' },
   { name: 'Indonesia' },
@@ -43,17 +41,19 @@ const asianCountries = [
   { name: 'Myanmar (Burma)' },
   { name: 'Nepal' },
   { name: 'North Korea' },
+  { name: 'Northern Mariana Islands' },
   { name: 'Oman' },
   { name: 'Pakistan' },
   { name: 'Philippines' },
   { name: 'Qatar' },
   { name: 'Russia' },
   { name: 'Saudi Arabia' },
-  { name: 'Singapore' },
   { name: 'South Korea' },
   { name: 'Sri Lanka' },
   { name: 'Syria' },
+  { name: 'Taiwan' },
   { name: 'Tajikistan' },
+  { name: 'Timor-Leste'},
   { name: 'Thailand' },
   { name: 'Turkey' },
   { name: 'Turkmenistan' },
@@ -64,7 +64,6 @@ const asianCountries = [
 ];
 
 const africanCountries = [
-  { name: 'Angola' },
   { name: 'Angola' },
   { name: 'Burundi' },
   { name: 'Benin' },
@@ -100,12 +99,12 @@ const africanCountries = [
   { name: 'Niger' },
   { name: 'Nigeria' },
   { name: 'Rwanda' },
-  { name: 'W. Sahara' },
+  { name: 'Western Sahara' },
   { name: 'Sudan' },
-  { name: 'S. Sudan' },
+  { name: 'South Sudan' },
   { name: 'Senegal' },
   { name: 'Sierra Leone' },
-  { name: 'Swaziland' },
+  { name: 'Eswatini' },
   { name: 'Chad' },
   { name: 'Togo' },
   { name: 'Tunisia' },
@@ -118,29 +117,44 @@ const africanCountries = [
 ];
 
 const northAmericanCountries = [
+  { name: 'Alaska' },
   { name: 'Antigua and Barbuda' },
+  { name: 'Antilles' },
+  { name: 'Aruba' },
   { name: 'Bahamas' },
   { name: 'Barbados' },
   { name: 'Belize' },
+  { name: 'British Virgin Islands' },
   { name: 'Canada' },
+  { name: 'Caribbean Netherlands' },
+  { name: 'Cayman Islands' },
   { name: 'Costa Rica' },
   { name: 'Cuba' },
+  { name: 'Curaçao' },
   { name: 'Dominica' },
   { name: 'Dominican Republic' },
   { name: 'El Salvador' },
+  { name: 'Greenland' },
   { name: 'Grenada' },
+  { name: 'Guam' },
   { name: 'Guatemala' },
   { name: 'Haiti' },
+  { name: 'Hawaii' },
   { name: 'Honduras' },
   { name: 'Jamaica' },
+  { name: 'Martinique' },
   { name: 'Mexico' },
+  { name: 'Montserrat' },
   { name: 'Nicaragua' },
   { name: 'Panama' },
+  { name: 'Puerto Rico' },
   { name: 'Saint Kitts and Nevis' },
   { name: 'Saint Lucia' },
   { name: 'Saint Vincent and the Grenadines' },
   { name: 'Trinidad and Tobago' },
+  { name: 'Turks and Caicos Islands' },
   { name: 'United States' },
+  { name: 'U.S. Virgin Islands' },
 ];
 
 const southAmericanCountries = [
@@ -150,6 +164,8 @@ const southAmericanCountries = [
   { name: 'Chile' },
   { name: 'Colombia' },
   { name: 'Ecuador' },
+  { name: 'Falkland Islands' },
+  { name: 'French Guiana' },
   { name: 'Guyana' },
   { name: 'Paraguay' },
   { name: 'Peru' },
@@ -189,6 +205,7 @@ const europeanCountries = [
   { name: 'Romania' },
   { name: 'Serbia' },
   { name: 'Slovakia' },
+  { name: 'Svalbard' },
   { name: 'Switzerland' },
   { name: 'Slovenia' },
   { name: 'Sweden' },
@@ -206,21 +223,12 @@ const europeanCountries = [
 const oceaniaCountries = [
   { name: 'Australia' },
   { name: 'Fiji' },
-  { name: 'Kiribati' },
-  { name: 'Marshall Islands' },
-  { name: 'Micronesia' },
-  { name: 'Nauru' },
+  { name: 'New Caledonia' },
   { name: 'New Zealand' },
-  { name: 'Palau' },
   { name: 'Papua New Guinea' },
-  { name: 'Samoa' },
   { name: 'Solomon Islands' },
-  { name: 'Tonga' },
-  { name: 'Tuvalu' },
   { name: 'Vanuatu' },
 ];
-
-const antarcticaCountries = []; // Antarctica has no countries
 
 export default function HomePage() {
   // State to keep track of the selected continent
@@ -358,10 +366,6 @@ export default function HomePage() {
     case 'South America':
       MapComponent = SouthAmericaMap;
       currentContinentCountries = southAmericanCountries;
-      break;
-    case 'Antarctica':
-      MapComponent = AntarcticaMap;
-      currentContinentCountries = []; // No countries to show for Antarctica
       break;
     case 'Oceania':
       MapComponent = OceaniaMap;

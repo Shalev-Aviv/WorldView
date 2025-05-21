@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     // Generate a real JWT token
     const token = jwt.sign(
       { userId: user.id, email: user.email },
-      process.env.JWT_TOKEN || 'your-secret-key', // Use a secure secret in production!
+      process.env.JWT_TOKEN || 'your-secret-key',
       { expiresIn: '7d' }
     );
 

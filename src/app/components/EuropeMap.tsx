@@ -188,7 +188,7 @@ const EuropeMap: React.FC<EuropeMapProps> = ({ selectedCountryName, visitedCount
         <svg xmlns="http://www.w3.org/2000/svg"
             version="1.1" id="svg2"
             style={{ strokeLinejoin: 'round' }}
-            className='stroke-[#000] fill-[#f2f2f2] w-[1000px] h-[883px]'
+            className='stroke-black stroke-[0.2px] fill-[#f2f2f2] w-[1000px] h-[883px]'
             enableBackground="new 0 0 1000 883"
             viewBox="0 0 1000 883"
             >

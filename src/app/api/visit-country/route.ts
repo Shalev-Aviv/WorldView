@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 // Helper function to extract and validate token from headers
 function getToken(req: NextRequest): string {
     const authHeader = req.headers.get('authorization');
-    console.log('Authorization header:', authHeader); // Debug log
+    console.log('Authorization header:', authHeader);
     const token = authHeader?.replace('Bearer ', '');
     if (!token) {
         // Log or handle the error appropriately before throwing
