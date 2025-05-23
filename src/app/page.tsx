@@ -242,6 +242,10 @@ export default function HomePage() {
   const [visitedCountries, setVisitedCountries] = useState<string[]>([]);
   const [user, setUser] = useState<{ email: string } | null>(null);
 
+  // Separate state for searched and clicked country
+  const [searchedCountryName, setSearchedCountryName] = useState<string | null>(null);
+  const [clickedCountryName, setClickedCountryName] = useState<string | null>(null);
+
   useEffect(() => {
     // Example: get user from localStorage or cookie
     const token = localStorage.getItem('token');
@@ -298,7 +302,11 @@ export default function HomePage() {
 
   async function handleCountryClick(countryName: string) {
     if (!token) return setShowModal(true);
-    setSelectedCountryName(countryName);
+    setClickedCountryName(countryName);
+    // If the clicked country is the currently searched one, clear the search highlight
+    if (searchedCountryName === countryName) {
+      setSearchedCountryName(null);
+    }
     const res = await fetch('/api/visit-country', {
       method: 'POST',
       headers: {
@@ -321,15 +329,16 @@ export default function HomePage() {
     }
   }
 
+  // Handler for dropdown selection
   const handleCountrySelectFromDropdown = (countryName: string | null) => {
-    setSelectedCountryName(countryName);
-    // TODO: Implement logic to highlight this country on the currently displayed map
+    setSearchedCountryName(countryName); // Only update searchedCountryName
   };
 
   // Handler for when a continent is selected from the navigation
   const handleContinentSelect = (continent: string) => {
-    setSelectedContinent(continent); // Update the continent state
-    setSelectedCountryName(null); // Clear any selected country when changing continent
+    setSelectedContinent(continent);
+    setSearchedCountryName(null);
+    setClickedCountryName(null);
     // TODO: Potentially update the list of countries passed to the dropdown based on the selected continent
   };
 
@@ -397,20 +406,31 @@ export default function HomePage() {
           <CountrySearch
             countries={currentContinentCountries}
             onSelectCountry={handleCountrySelectFromDropdown}
-            onFocus={() => setSelectedCountryName(null)}
-            selectedCountryName={selectedCountryName}
+            selectedCountryName={searchedCountryName}
           />
         )}
       </div>
 
       {/* Render the selected map component */}
       <div className='mt-10'>
-        {MapComponent && <MapComponent selectedCountryName={selectedCountryName} visitedCountries={visitedCountries} onCountryClick={handleCountryClick} />}
+        {MapComponent && (
+          <MapComponent
+            selectedCountryName={searchedCountryName} // Only searched country gets green fill
+            visitedCountries={visitedCountries}
+            onCountryClick={handleCountryClick}
+          />
+        )}
       </div>
 
       {/* Optional: Display selected country */}
-      {selectedCountryName && (
-        <p className="mt-4 text-lg">Selected Country: {selectedCountryName}</p>
+      {(searchedCountryName || clickedCountryName) && (
+        <p className="mt-4 text-lg">
+          {searchedCountryName
+            ? `Searched Country: ${searchedCountryName}`
+            : clickedCountryName
+            ? `Clicked Country: ${clickedCountryName}`
+            : ''}
+        </p>
       )}
 
       {/* Auth modal for login/signup */}

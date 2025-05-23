@@ -37,11 +37,15 @@ interface CountrySearchProps {
         const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             setSearchTerm(event.target.value);
             setIsOpen(true);
+            if (event.target.value === '') {
+                onSelectCountry(null);
+            }
         };
         
         const handleInputFocus = () => {
            setSearchTerm('');
            setIsOpen(true);
+           onSelectCountry(null); // Clear selection on focus (optional, but matches "Looking for...")
         };
     
         const handleInputBlur = () => {
@@ -51,6 +55,7 @@ interface CountrySearchProps {
         const handleSelectCountry = (country: Country) => {
           setSearchTerm(country.name);
           setIsOpen(false);
+          // Notify parent of selected country (by name)
           onSelectCountry(country.name);
         };
     

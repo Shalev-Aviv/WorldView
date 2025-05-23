@@ -175,7 +175,9 @@ const NorthAmericaMap: React.FC<NorthAmericaMapProps> = ({ selectedCountryName, 
 
             {northAmericaPaths.map((country) => {
                 let fillClass = '';
-                if (visitedCountries.includes(country.dataName)) {
+                if (country.dataName === selectedCountryName) {
+                    fillClass = 'fill-green-500';
+                } else if (visitedCountries.includes(country.dataName)) {
                     fillClass = 'fill-purple-500';
                 }
                 return (
