@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface UseVisitedCountriesProps {
   token: string | null;
@@ -30,16 +30,16 @@ export function useVisitedCountries({
   }, [token]);
 
   async function fetchVisitedCountries(token: string) {
-    const res = await fetch('/api/visit-country', {
-      method: 'GET',
-      headers: { 'Authorization': `Bearer ${token}` }
+    const res = await fetch("/api/visit-country", {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
     });
     if (res.ok) {
       const data = await res.json();
       setVisitedCountries(data.visitedCountries || []);
     } else if (res.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('email');
+      localStorage.removeItem("token");
+      localStorage.removeItem("email");
       setToken(null);
       setUser(null);
       setShowModal(true);
@@ -53,21 +53,21 @@ export function useVisitedCountries({
     if (searchedCountryName === countryName) {
       setSearchedCountryName(null);
     }
-    const res = await fetch('/api/visit-country', {
-      method: 'POST',
+    const res = await fetch("/api/visit-country", {
+      method: "POST",
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ countryName })
+      body: JSON.stringify({ countryName }),
     });
     if (res.ok) {
       setVisitedCountries((prev) =>
         prev.includes(countryName) ? prev : [...prev, countryName]
       );
     } else if (res.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('email');
+      localStorage.removeItem("token");
+      localStorage.removeItem("email");
       setToken(null);
       setUser(null);
       setShowModal(true);
