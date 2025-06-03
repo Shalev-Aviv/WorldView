@@ -22,7 +22,7 @@ const ContinentNavigation: React.FC<ContinentNavigationProps> = ({
   onSelectContinent,
 }) => {
   return (
-    <menu className="absolute h-full left-0 top-0 rounded-lg text-white flex flex-col justify-between pt-32 pb-32 w-50 bg-gray-800 p-4 z-1">
+    <menu className="fixed h-full left-0 top-0 rounded-l-none rounded-r-lg text-white flex flex-col justify-between pt-32 pb-32 w-50 p-4 z-1 bg-gradient-to-br from-[#ffffff50] to-black border-1 border-solid border-white">
       {continents.map((continent) => (
         <li
           className="py-2 border-2 border-transparent hover:text-purple-500 transition-colors duration-100 cursor-pointer text-center font-bold font-mono underline"

@@ -112,7 +112,7 @@ INSERT INTO countries (name) VALUES
 ('Bermuda'),
 ('British Virgin Islands'),
 ('Canada'),
-('Caribbean Netherlands'),
+('Bonaire'),
 ('Cayman Islands'),
 ('Costa Rica'),
 ('Cuba'),
@@ -123,7 +123,7 @@ INSERT INTO countries (name) VALUES
 ('Greenland'),
 ('Grenada'),
 ('Guatemala'),
-('Guam'),
+('Guadeloupe'),
 ('Haiti'),
 ('Hawaii'),
 ('Honduras'),
@@ -140,7 +140,7 @@ INSERT INTO countries (name) VALUES
 ('Trinidad and Tobago'),
 ('Turks and Caicos Islands'),
 ('United States'),
-('U.S. Virgin Islands'),
+('US Virgin Islands'),
 
 -- South America
 ('Argentina'),

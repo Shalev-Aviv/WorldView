@@ -1,4 +1,5 @@
 # WorldView🌍
+
 WorldView is your ultimate travel companion – a sleek, interactive map that transforms your wanderlust into a visual journey around the globe.
 Explore every continent, mark the countries you’ve visited, and watch your personal world map come to life with vibrant colors!
 
@@ -9,6 +10,7 @@ Explore every continent, mark the countries you’ve visited, and watch your per
 🎯 Visualize your progress like a global travel progress bar
 
 ## Tech Stack🛠️
+
 - [React](https://react.dev/)
 - [Next.js](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
@@ -16,33 +18,42 @@ Explore every continent, mark the countries you’ve visited, and watch your per
 - [PostgreSQL](https://www.postgresql.org/download/)
 
 ## Installation & Usage🚀
+
 ### Prerequisites
+
 - [Node.js & npm](https://nodejs.org/en) (for the frontend and backend)
-- [PostgreSQL](https://www.postgresql.org/download/) (for local data storage)
+- [PostgreSQL](https://www.postgresql.org/) (for local data storage)
+
 ### Recommended Versions
+
 - Node ^=20
 - PostgreSQL ^=17.0
 
 ### Setup before running
+
 ```sh
 - npm install
 - Create a `.env` file in the root directory and add the following lines:
-    DATABASE_URL=postgresql://[USER]:[PASSWORD]@localhost:5432/[YOUR_DB_NAME]
-    JWT_TOKEN="your_jwt_secret"
+    DATABASE_URL=postgresql://[USER]:[PASSWORD]@localhost:5432/[YOUR_DB_NAME] # Change everything in [] with your actual data
+    JWT_TOKEN="your_jwt_secret" # change the string with your real token, to create a token use: node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 - npx prisma install
 - npx prisma migrate deploy
 ```
 
 ### run the project
+
 ```sh
 npm run dev
 ```
 
 ## Contribution🤝
+
 Contributions are welcome! Feel free to submit issues or pull requests.
 
 ## License📄
+
 This project is licensed under the MIT License.
 
 ## Credits🥰
+
 SVG continents maps created by [Simplemaps.com](http://simplemaps.com)

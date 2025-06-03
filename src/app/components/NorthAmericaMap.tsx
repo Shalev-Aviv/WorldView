@@ -20,9 +20,9 @@ const NorthAmericaMap: React.FC<NorthAmericaMapProps> = ({
       version="1.2"
       id="svg2"
       style={{ strokeLinejoin: "round" }}
-      className="stroke-black stroke-[0.2px] fill-white w-[1162px] h-[1001px]"
-      enableBackground="new 0 0 1162 1001"
-      viewBox="0 0 1162 1001"
+      className="stroke-black stroke-[0.2px] fill-white w-[1699px] h-[915px]"
+      enableBackground="new 0 0 1699 915"
+      viewBox="0 0 1699 915"
     >
       {northAmericanCountries.map((country) => {
         let fillClass = "";

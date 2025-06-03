@@ -26,10 +26,26 @@ import { useVisitedCountries } from "./hook/visitedCountries";
 const allCountries = [
   ...asianCountries.map((c) => ({ ...c, continent: "Asia", code: c.name })),
   ...africanCountries.map((c) => ({ ...c, continent: "Africa", code: c.name })),
-  ...europeanCountries.map((c) => ({...c, continent: "Europe", code: c.name })),
-  ...northAmericanCountries.map((c) => ({...c, continent: "North America", code: c.name })),
-  ...southAmericanCountries.map((c) => ({...c, continent: "South America", code: c.name })),
-  ...oceanianCountries.map((c) => ({...c, continent: "Oceania", code: c.name })),
+  ...europeanCountries.map((c) => ({
+    ...c,
+    continent: "Europe",
+    code: c.name,
+  })),
+  ...northAmericanCountries.map((c) => ({
+    ...c,
+    continent: "North America",
+    code: c.name,
+  })),
+  ...southAmericanCountries.map((c) => ({
+    ...c,
+    continent: "South America",
+    code: c.name,
+  })),
+  ...oceanianCountries.map((c) => ({
+    ...c,
+    continent: "Oceania",
+    code: c.name,
+  })),
 ];
 
 export default function HomePage() {
@@ -56,12 +72,7 @@ export default function HomePage() {
     null
   );
 
-  const {
-    visitedCountries,
-    fetchVisitedCountries,
-    handleCountryClick,
-    setVisitedCountries,
-  } = useVisitedCountries({
+  const { visitedCountries, handleCountryClick } = useVisitedCountries({
     token,
     setToken,
     setUser,
@@ -156,16 +167,6 @@ export default function HomePage() {
           />
         )}
       </div>
-
-      {(searchedCountryName || clickedCountryName) && (
-        <p className="mt-4 text-lg">
-          {searchedCountryName
-            ? `Searched Country: ${searchedCountryName}`
-            : clickedCountryName
-            ? `Clicked Country: ${clickedCountryName}`
-            : ""}
-        </p>
-      )}
 
       {!user && (
         <>
