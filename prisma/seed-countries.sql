@@ -109,6 +109,7 @@ INSERT INTO countries (name) VALUES
 ('Bahamas'),
 ('Barbados'),
 ('Belize'),
+('Bermuda'),
 ('British Virgin Islands'),
 ('Canada'),
 ('Caribbean Netherlands'),
