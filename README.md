@@ -15,14 +15,14 @@ Explore every continent, mark the countries you’ve visited, and watch your per
 - [Next.js](https://nextjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind](https://tailwindcss.com/)
-- [PostgreSQL](https://www.postgresql.org/download/)
+- [PostgreSQL](https://www.postgresql.org/)
 
 ## Installation & Usage🚀
 
 ### Prerequisites
 
 - [Node.js & npm](https://nodejs.org/en) (for the frontend and backend)
-- [PostgreSQL](https://www.postgresql.org/) (for local data storage)
+- [PostgreSQL](https://www.postgresql.org/download/) (for local data storage)
 
 ### Recommended Versions
 
